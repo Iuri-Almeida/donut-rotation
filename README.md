@@ -27,6 +27,8 @@ Estou me desafiando a desenvolver a cada dia um projeto com qualquer tipo de fun
 
 Esse projeto tem a funcionalidade de **rotação**. Aqui, foi desenvolvido um algoritmo capaz de, matematicamente, gerar a rotação do sólido [Toro][toro].
 
+**Obs.:** A ideia desse projeto veio do projeto do [Donut][donut] feito pelo [a1k0n][a1k0n]. Depois de passar alguns dias lendo e estudando sobre o assunto, criei a minha versão feita em JavaScript e estou estudando para criar um artigo sobre o assunto.
+
 </p>
 
 </div>
@@ -85,3 +87,5 @@ $ open index.html
 [css]: https://developer.mozilla.org/pt-BR/docs/Web/CSS
 [js]: https://developer.mozilla.org/pt-BR/docs/Web/JavaScript
 [linkedin]: https://www.linkedin.com/in/iurilopesalmeida/
+[donut]: https://www.a1k0n.net/2011/07/20/donut-math.html
+[a1k0n]: https://github.com/a1k0n

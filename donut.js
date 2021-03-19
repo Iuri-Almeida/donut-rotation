@@ -143,7 +143,7 @@ const donut = () => {
                 normalY = cosTHETA * (sinB * cosPHI + sinA * cosB * sinPHI) + (sinTHETA * cosA * cosB),
                 normalZ = (sinTHETA * sinA) - (cosTHETA * cosA * sinPHI)
 
-            // definindo a luminosidade L = (Nx, Ny, Nz) • (0, 1 / √2, -1 / √2)
+            // definindo a luminosidade L = (Nx, Ny, Nz) • (Vx, Vy, Vz)
             let L = (normalX * VECTOR_X) + (normalY * VECTOR_Y) + (normalZ * VECTOR_Z)
 
             // pegando somente pontos que estão de "frente" pra luz
