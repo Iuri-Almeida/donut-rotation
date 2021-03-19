@@ -1,0 +1,31 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+a {
+  text-decoration: none;
+}
+
+a,
+button {
+  cursor: pointer;
+}
+
+:root {
+  font-size: 10px;
+
+  --body: #000;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+
+  background: var(--body);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
