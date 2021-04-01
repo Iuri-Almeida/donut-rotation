@@ -1,3 +1,29 @@
+// função responsável por realizar a multiplicação das matrizes de rotação
+function rotation(vector, angles) {
+
+    // desestruturando o vetor
+    let [x, y, z] = vector,
+        [sinA, cosA, sinB, cosB, sinPHI, cosPHI] = angles
+
+    // rotacionando o vetor no eixo Y
+    let rot_Y_x = (cosPHI * x + 0 * y + sinPHI * z),
+        rot_Y_y = (0 * x + 1 * y + 0 * z),
+        rot_Y_z = (- sinPHI * x + 0 * y + cosPHI * z)
+
+    // rotacionando o vetor no eixo X
+    let rot_X_x = (1 * rot_Y_x + 0 * rot_Y_y + 0 * rot_Y_z),
+        rot_X_y = (0 * rot_Y_x + cosA * rot_Y_y - sinA * rot_Y_z),
+        rot_X_z = (0 * rot_Y_x + sinA * rot_Y_y + cosA * rot_Y_z)
+
+    // rotacionando o vetor no eixo Z
+    let rot_Z_x = (cosB * rot_X_x - sinB * rot_X_y + 0 * rot_X_z),
+        rot_Z_y = (sinB * rot_X_x + cosB * rot_X_y + 0 * rot_X_z),
+        rot_Z_z = (0 * rot_X_x + 0 * rot_X_y + 1 * rot_X_z)
+
+    return [rot_Z_x, rot_Z_y, rot_Z_z]
+}
+
+
 // função responsável por gerar 
 function unitVector(vector) {
 
@@ -67,8 +93,8 @@ const THETA_START = 0,
 // definindo o espaçamento
 const A_SPACING = 0.07, // ângulo de rotação em Z
     B_SPACING = 0.03, // ângulo de rotação em X
-    THETA_SPACING = 0.1, // ângulo de rotação da circunferência
-    PHI_SPACING = 0.05, // ângulo de rotação do Donut
+    THETA_SPACING = 0.2, // ângulo de rotação da circunferência
+    PHI_SPACING = 0.08, // ângulo de rotação do Donut
     HUE_SPACING = 0.001 // mudança de cor
 
 // definindo 
@@ -78,8 +104,8 @@ const SEPARATOR_X = 1.5,
 // definindo as constantes
 const RADIUS_CIRC = 1,
     RADIUS_DONUT = 2,
-    DEPTH = 6,
-    K1 = 100
+    DEPTH = 8,
+    K1 = 150
 
 // definindo o vetor (0, 1, -1) --> em cima da cabeça do observador
 const REF_VECTOR = [0, 1, -1]
@@ -129,19 +155,21 @@ const donut = () => {
                 circleY = RADIUS_CIRC * sinTHETA
 
             // definindo as coordenadas em R3 após a rotação
-            let x = circleX * (cosB * cosPHI - sinA * sinB * sinPHI) - (circleY * cosA * sinB),
-                y = circleX * (sinB * cosPHI + sinA * cosB * sinPHI) + (circleY * cosA * cosB),
-                z = DEPTH + (circleY * sinA) - (circleX * cosA * sinPHI),
-                oneOverZ = 1 / z
+            let rotationVector = [circleX, circleY, 0],
+                angles = [sinA, cosA, sinB, cosB, sinPHI, cosPHI],
+                [x, y, z] = rotation(rotationVector, angles)
+
+            z = DEPTH + z
+            let oneOverZ = 1 / z
+
 
             // definindo a projeção de cada ponto
             let projX = (SCREEN_WIDTH / 2) + (K1 * oneOverZ * x),
                 projY = (SCREEN_HEIGHT / 2) - (K1 * oneOverZ * y)
 
             // definindo o vetor normal a todos os pontos da superfície
-            let normalX = cosTHETA * (cosB * cosPHI - sinA * sinB * sinPHI) - (sinTHETA * cosA * sinB),
-                normalY = cosTHETA * (sinB * cosPHI + sinA * cosB * sinPHI) + (sinTHETA * cosA * cosB),
-                normalZ = (sinTHETA * sinA) - (cosTHETA * cosA * sinPHI)
+            let normalVector = [cosTHETA, sinTHETA, 0],
+                [normalX, normalY, normalZ] = rotation(normalVector, angles)
 
             // definindo a luminosidade L = (Nx, Ny, Nz) • (Vx, Vy, Vz)
             let L = (normalX * VECTOR_X) + (normalY * VECTOR_Y) + (normalZ * VECTOR_Z)
